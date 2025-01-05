@@ -1,0 +1,35 @@
+<hlm-dialog class="w-full">
+  <button brnDialogTrigger class="flex w-full flex-row items-center gap-2 bg-zinc-700 hover:bg-zinc-600 p-2 rounded-md cursor-pointer">
+    <hlm-avatar variant="medium">
+      <span class="text-white bg-teal-500" hlmAvatarFallback>
+        <hlm-icon size="sm" name="lucideMessageCirclePlus" />
+      </span>
+    </hlm-avatar>
+    <p class="text-sm">Nova conversa</p>
+  </button>
+  
+  <hlm-dialog-content class="sm:max-w-[425px] bg-zinc-700" *brnDialogContent="let ctx">
+    <hlm-dialog-header class="flex flex-row gap-2 items-center">
+      <div>
+        <hlm-avatar variant="small">
+          <span class="text-white bg-teal-500" hlmAvatarFallback>
+            <hlm-icon size="sm" name="lucideMessageCirclePlus" />
+          </span>
+        </hlm-avatar>
+      </div>
+      <div>
+        <h3 hlmDialogTitle>Nova conversa</h3>
+        <p hlmDialogDescription>Adicione um novo contato para iniciar uma conversa</p>
+      </div>
+    </hlm-dialog-header>
+    <div class="py-4 gap-4">
+      <div class="items-center gap-4 flex flex-row flex-wrap">
+        <label hlmLabel for="name" class="text-right">ID</label>
+        <input hlmInput id="name" placeholder="Digite o ID aqui" class="col-span-3 border-zinc-400" />
+      </div>
+    </div>
+    <hlm-dialog-footer>
+      <button hlmBtn type="submit">Iniciar conversa</button>
+    </hlm-dialog-footer>
+  </hlm-dialog-content>
+</hlm-dialog>

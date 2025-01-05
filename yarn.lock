@@ -3081,10 +3081,24 @@
   dependencies:
     tslib "^2.3.0"
 
+"@spartan-ng/ui-dialog-brain@0.0.1-alpha.380":
+  version "0.0.1-alpha.374"
+  resolved "https://registry.yarnpkg.com/@spartan-ng/ui-dialog-brain/-/ui-dialog-brain-0.0.1-alpha.374.tgz#a6700f9254c8ab339f96350b376ed008260918fc"
+  integrity sha512-8Z6iICOYpMZxYC/qd4S664R5bc3nLuQsss/chvcP94WkjRLZEpwr6HKcbSvpmTuTDdQzEGbrwcE4LttwERw5kw==
+  dependencies:
+    tslib "^2.3.0"
+
 "@spartan-ng/ui-formfield-brain@0.0.1-alpha.380":
   version "0.0.1-alpha.374"
   resolved "https://registry.yarnpkg.com/@spartan-ng/ui-formfield-brain/-/ui-formfield-brain-0.0.1-alpha.374.tgz#4432901fb014070dffab90f2126f59186753f71b"
   integrity sha512-wKNGP71m9S926tL/JCwVi4ypR+kYW2Jxo/butMm7y8iFIzREa1+JKIux1VnzjEoZafiflD939GqTqF+rUi4PmA==
+  dependencies:
+    tslib "^2.3.0"
+
+"@spartan-ng/ui-label-brain@0.0.1-alpha.380":
+  version "0.0.1-alpha.374"
+  resolved "https://registry.yarnpkg.com/@spartan-ng/ui-label-brain/-/ui-label-brain-0.0.1-alpha.374.tgz#734efaa45f5c5b10ef707f30f23b3f5a0340391f"
+  integrity sha512-3mjA4z1+E60iia18K3DeLnP3DT+BqOc/32NL6iZJe5a/T0rLlNuXnnKH4anHVQNrT8DbIHX9i6f9dn4F8olzdQ==
   dependencies:
     tslib "^2.3.0"
 

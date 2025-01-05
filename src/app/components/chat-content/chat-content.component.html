@@ -1,3 +1,14 @@
+<div class="bg-zinc-600 flex flex-row justify-start items-center gap-4 py-2 px-4">
+  <hlm-avatar variant="medium">
+    <span class="text-white bg-zinc-500" hlmAvatarFallback>
+      <hlm-icon size="sm" name="lucideUser" />
+    </span>
+  </hlm-avatar>
+  <div class="flex flex-col flex-nowrap justify-center items-start overflow-hidden">
+    <p class="text-sm">ID</p>
+    <p class="text-xs text-nowrap">online</p>
+  </div>
+</div>
 <main class="w-full overflow-auto flex flex-col gap-6 container" #messagesContainer>
     @for (message of messages; track $index) {
       <app-chat-message [class]="((
@@ -7,7 +18,7 @@
       ) + ' min-w-60 p-2 rounded-lg flex flex-col gap-2')" [message]="message"></app-chat-message>
     }
 </main>
-<div class="flex flex-row self-center items-end w-full gap-2 container">
+<div class="flex flex-row self-center items-end w-full gap-2 container mb-4">
   @if (imageSelected) {
     <div class="flex-1 bg-zinc-700 flex flex-col justify-center items-start gap-2 p-4 relative rounded-lg">
       <button (click)="onCloseFile()" hlmBtn size="sm" variant="destructive" class="rounded-full absolute top-2 left-2">
@@ -19,7 +30,7 @@
       <p class="font-mono text-xs">Tamanho: {{(imageSelected.size / 1000).toFixed(2)}} KB</p>
     </div>
   } @else {
-    <textarea class="flex-1" hlmInput placeholder="Mensagem"></textarea>
+    <textarea class="flex-1 h-16" hlmInput placeholder="Mensagem"></textarea>
   }
 
   <button hlmBtn size="icon" variant="secondary" (click)="fileInput.click()">
