@@ -1,6 +1,6 @@
 @if (message.message.type === 'text') {
   <p class="font-semibold">{{message.message.content}}</p>
 } @else {
-  <img src="{{message.message.content}}" alt="image" class="w-full h-56 object-cover">
+  <img src="{{message.message.content}}" alt="image" class="w-full h-56 object-cover rounded-md">
 }
 <p class="text-gray-200 text-xs">{{message.created_at}}</p>

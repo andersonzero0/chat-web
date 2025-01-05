@@ -1,17 +1,40 @@
-<nav class="w-64 h-screen bg-zinc-800 p-4 flex flex-col gap-4">
-  <header class="flex flex-row justify-start items-center gap-4 border-b-2 border-zinc-600 pb-4">
-    <hlm-avatar>
-      <span class="text-white bg-zinc-500" hlmAvatarFallback>
-        <hlm-icon size="base" name="lucideUser" />
-      </span>
-    </hlm-avatar>
-    <p class="text-base">ABC123</p>
+<nav class="w-64 h-screen bg-zinc-800 p-4 flex flex-col gap-4 overflow-auto">
+  <header class="border-b-2 border-zinc-600 pb-4 flex flex-row justify-between items-center">
+    <div class="flex flex-row justify-start items-center gap-4">
+      <hlm-avatar>
+        <span class="text-white bg-zinc-500" hlmAvatarFallback>
+          <hlm-icon size="base" name="lucideUser" />
+        </span>
+      </hlm-avatar>
+      <p class="text-base">ABC123</p>
+    </div>
+
+    <button hlmBtn size="icon" variant="ghost">
+      <hlm-icon class="flex-1" name="lucideLogOut" size="sm" />
+    </button>
   </header>
 
   <section>
     <div class="flex flex-row justify-between items-center rounded-md bg-zinc-700 px-2">
-      <input class="w-5/6 border-none py-2 focus-visible:border-none focus-visible:outline-none bg-transparent" placeholder="ID do usuário" />
+      <input class="w-5/6 border-none py-2 focus-visible:border-none focus-visible:outline-none bg-transparent" placeholder="Buscar" />
       <hlm-icon class="flex-1" name="lucideSearch" size="sm" />
+    </div>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <p class="font-semibold">Conversas</p>
+
+    <div class="flex flex-col gap-3">
+      @for (user of users; track $index) {
+        <div class="flex flex-row items-center gap-2 hover:bg-zinc-700 p-1 rounded-md cursor-pointer">
+          <hlm-avatar variant="medium">
+            <span class="text-white bg-zinc-500" hlmAvatarFallback>
+              <hlm-icon size="sm" name="lucideUser" />
+            </span>
+          </hlm-avatar>
+          <p class="text-sm">{{ user.name }}</p>
+        </div>
+      }
     </div>
   </section>
 </nav>

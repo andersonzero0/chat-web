@@ -11,7 +11,7 @@ import { HlmFormFieldModule } from "@spartan-ng/ui-formfield-helm";
 import { HlmInputDirective } from "@spartan-ng/ui-input-helm";
 import { HlmIconComponent } from "@spartan-ng/ui-icon-helm";
 import { provideIcons } from "@ng-icons/core";
-import { lucideCopy, lucideSearch, lucideUser } from "@ng-icons/lucide";
+import { lucideCopy, lucideImageUp, lucideLogOut, lucideSearch, lucideSendHorizontal, lucideUser, lucideX } from "@ng-icons/lucide";
 
 const components = [
   HlmButtonModule,
@@ -26,6 +26,18 @@ const components = [
 @NgModule({
   imports: components,
   exports: components,
-  providers: [provideIcons({ lucideUser, lucideCopy, lucideSearch })],
+  providers: [
+    provideIcons(
+      {
+        lucideUser,
+        lucideCopy,
+        lucideSearch,
+        lucideSendHorizontal,
+        lucideImageUp,
+        lucideLogOut,
+        lucideX
+      }
+    )
+  ],
 })
 export class SharedModule {}
