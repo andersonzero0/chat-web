@@ -1,5 +1,11 @@
 <main class="bg-zinc-900 w-screen h-screen flex flex-row">
-  <app-chat-sidebar></app-chat-sidebar>
+  <app-chat-sidebar
+    [chatId]="openChatId"
+    (chatSelected)="onChatSelected($event)"
+  ></app-chat-sidebar>
 
-  <app-chat-content class="flex flex-col w-full gap-4"></app-chat-content>
+  <app-chat-content
+    [chatId]="openChatId"
+    class="flex flex-col w-full gap-4"
+  ></app-chat-content>
 </main>

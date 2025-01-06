@@ -9,5 +9,9 @@ import { ChatContentComponent } from '../../components/chat-content/chat-content
   templateUrl: './chat.component.html',
 })
 export class ChatComponent {
+  openChatId: string | null = null;
 
+  onChatSelected(chatId: string): void {
+    this.openChatId = chatId;
+  }
 }

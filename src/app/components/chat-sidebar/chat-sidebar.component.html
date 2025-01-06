@@ -1,22 +1,29 @@
 <nav class="w-64 h-screen bg-zinc-800 p-4 flex flex-col gap-4 overflow-auto">
-  <header class="border-b-2 border-zinc-600 pb-4 flex flex-row justify-between items-center">
+  <header
+    class="border-b-2 border-zinc-600 pb-4 flex flex-row justify-between items-center"
+  >
     <div class="flex flex-row justify-start items-center gap-4">
       <hlm-avatar>
         <span class="text-white bg-zinc-500" hlmAvatarFallback>
           <hlm-icon size="base" name="lucideUser" />
         </span>
       </hlm-avatar>
-      <p class="text-base">ABC123</p>
+      <p class="text-base">{{ getMyId() }}</p>
     </div>
 
-    <button hlmBtn size="icon" variant="ghost">
+    <button (click)="logout()" hlmBtn size="icon" variant="ghost">
       <hlm-icon class="flex-1" name="lucideLogOut" size="sm" />
     </button>
   </header>
 
   <section>
-    <div class="flex flex-row justify-between items-center rounded-md bg-zinc-700 px-2">
-      <input class="w-5/6 border-none py-2 focus-visible:border-none focus-visible:outline-none bg-transparent" placeholder="Pesquisar" />
+    <div
+      class="flex flex-row justify-between items-center rounded-md bg-zinc-700 px-2"
+    >
+      <input
+        class="w-5/6 border-none py-2 focus-visible:border-none focus-visible:outline-none bg-transparent"
+        placeholder="Pesquisar"
+      />
       <hlm-icon class="flex-1" name="lucideUserSearch" size="sm" />
     </div>
   </section>
@@ -25,21 +32,64 @@
     <p class="font-semibold">Conversas</p>
 
     <div class="flex flex-col gap-3">
-
       <app-new-chat class="w-full"></app-new-chat>
+      @if (loading) {
+        <hlm-spinner [size]="'sm'" class="self-center" />
+      } @else if (!chatList || chatList.length === 0) {
+        <p class="text-sm text-center">Nenhuma conversa encontrada</p>
+      } @else {
+        @for (chatListItem of chatList; track $index) {
+          <div
+            (click)="selectChat(chatListItem.id)"
+            [class]="
+              'flex flex-row items-center justify-between gap-2 hover:bg-zinc-700 p-2 rounded-md cursor-pointer' +
+              (chatListItem.id === chatId ? ' bg-zinc-700' : '')
+            "
+          >
+            <div
+              class="flex flex-row items-center gap-2 flex-1 overflow-hidden"
+            >
+              <hlm-avatar variant="medium">
+                <span class="text-white bg-zinc-500" hlmAvatarFallback>
+                  <hlm-icon size="sm" name="lucideUser" />
+                </span>
+              </hlm-avatar>
+              <div class="flex flex-col flex-nowrap justify-center items-start">
+                <p class="text-sm">
+                  {{ chatListItem.id }}
+                </p>
+                @if (chatListItem.last_message) {
+                  @if (chatListItem.last_message.message.type == "text") {
+                    <p class="text-xs text-nowrap">
+                      {{ chatListItem.last_message.message.content }}
+                    </p>
+                  } @else {
+                    <p
+                      class="text-xs text-nowrap flex flex-row items-center gap-1"
+                    >
+                      <hlm-icon name="lucideImage" size="xs" />
+                      Imagem
+                    </p>
+                  }
+                }
+              </div>
+            </div>
 
-      @for (user of users; track $index) {
-        <div class="flex flex-row items-center gap-2 hover:bg-zinc-700 p-2 rounded-md cursor-pointer">
-          <hlm-avatar variant="medium">
-            <span class="text-white bg-zinc-500" hlmAvatarFallback>
-              <hlm-icon size="sm" name="lucideUser" />
-            </span>
-          </hlm-avatar>
-          <div class="flex flex-col flex-nowrap justify-center items-start overflow-hidden">
-            <p class="text-sm">{{ user.name }}</p>
-            <p class="text-xs text-nowrap">{{user.lastMessage}}</p>
+            @if (chatListItem.unread_messages_count > 0) {
+              <div>
+                <span
+                  class="bg-red-500 text-white rounded-full px-2 py-1 text-xs"
+                >
+                  {{
+                    chatListItem.unread_messages_count < 100
+                      ? chatListItem.unread_messages_count
+                      : "99+"
+                  }}
+                </span>
+              </div>
+            }
           </div>
-        </div>
+        }
       }
     </div>
   </section>
