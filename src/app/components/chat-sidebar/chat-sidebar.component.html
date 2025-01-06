@@ -32,7 +32,10 @@
     <p class="font-semibold">Conversas</p>
 
     <div class="flex flex-col gap-3">
-      <app-new-chat class="w-full"></app-new-chat>
+      <app-new-chat
+        (createNewChat)="createNewChat($event)"
+        class="w-full"
+      ></app-new-chat>
       @if (loading) {
         <hlm-spinner [size]="'sm'" class="self-center" />
       } @else if (!chatList || chatList.length === 0) {

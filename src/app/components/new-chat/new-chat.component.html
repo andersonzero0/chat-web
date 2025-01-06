@@ -30,19 +30,31 @@
         </p>
       </div>
     </hlm-dialog-header>
-    <div class="py-4 gap-4">
-      <div class="items-center gap-4 flex flex-row flex-wrap">
-        <label hlmLabel for="name" class="text-right">ID</label>
-        <input
-          hlmInput
-          id="name"
-          placeholder="Digite o ID aqui"
-          class="col-span-3 border-zinc-400"
-        />
+    <form [formGroup]="newChatForm">
+      <div class="py-4 gap-4">
+        <div class="items-center gap-4 flex flex-row flex-wrap">
+          <label hlmLabel for="name" class="text-right">ID</label>
+          <div class="flex flex-col gap-2">
+            <input
+              formControlName="id"
+              hlmInput
+              [maxLength]="8"
+              [minLength]="8"
+              id="name"
+              placeholder="Digite o ID aqui"
+              class="col-span-3 border-zinc-400"
+              pattern="[0-9]*"
+              (input)="onInput($event)"
+            />
+            <p class="text-xs text-zinc-400">Contém 8 números</p>
+          </div>
+        </div>
       </div>
-    </div>
-    <hlm-dialog-footer>
-      <button hlmBtn type="submit">Iniciar conversa</button>
-    </hlm-dialog-footer>
+      <hlm-dialog-footer>
+        <button (click)="onChatCreate()" hlmBtn type="submit">
+          Iniciar conversa
+        </button>
+      </hlm-dialog-footer>
+    </form>
   </hlm-dialog-content>
 </hlm-dialog>

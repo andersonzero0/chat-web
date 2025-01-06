@@ -2,7 +2,9 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { ChatMessageComponent } from '../chat-message/chat-message.component';
@@ -30,22 +32,20 @@ import {
   templateUrl: './chat-content.component.html',
 })
 export class ChatContentComponent implements AfterViewInit {
-  private _chatId: string | null = null;
+  @ViewChild('messagesContainer') messagesContainer!: ElementRef;
 
   constructor(
     private chatService: ChatService,
     private usersService: UsersService,
   ) {}
 
+  private _chatId: string | null = null;
+
   @Input()
   set chatId(value: string | null) {
     this._chatId = value;
     this.onChatIdChange();
   }
-
-  messageForm = new FormGroup({
-    message: new FormControl('', { validators: [Validators.required] }),
-  });
 
   get chatId(): string | null {
     return this._chatId;
@@ -62,7 +62,9 @@ export class ChatContentComponent implements AfterViewInit {
     }
   }
 
-  @ViewChild('messagesContainer') messagesContainer!: ElementRef;
+  messageForm = new FormGroup({
+    message: new FormControl('', { validators: [Validators.required] }),
+  });
 
   messages: Message[] = [];
   imageSelected: File | null = null;
@@ -75,8 +77,6 @@ export class ChatContentComponent implements AfterViewInit {
   }
 
   onSendMessage(): void {
-    console.log(this.messageForm);
-
     if (this.messageForm.invalid && !this.imageSelected) {
       return;
     }
@@ -96,7 +96,7 @@ export class ChatContentComponent implements AfterViewInit {
           this.imageSelected ? this.imageSelected : null,
         )
         .subscribe({
-          next: (message) => {
+          next: () => {
             this.messageForm.reset();
             this.messageForm.setErrors(null);
             this.imageSelected = null;
@@ -111,8 +111,10 @@ export class ChatContentComponent implements AfterViewInit {
   }
 
   addNewMessage(message: Message): void {
-    this.messages.unshift(message);
-    this.scrollToBottom();
+    if (this.chatId) {
+      this.messages.unshift(message);
+      this.scrollToBottom();
+    }
   }
 
   scrollToBottom(): void {

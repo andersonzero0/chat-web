@@ -40,6 +40,13 @@ export class ChatSidebarComponent implements OnInit {
   }
 
   selectChat(chatId: string): void {
+    if (this.chatList.length > 0) {
+      this.chatList.forEach((chat) => {
+        if (chat.id === chatId) {
+          chat.unread_messages_count = 0;
+        }
+      });
+    }
     this.chatSelected.emit(chatId);
   }
 
@@ -53,6 +60,13 @@ export class ChatSidebarComponent implements OnInit {
       error: () => {
         this.loading = false;
       },
+    });
+  }
+
+  createNewChat(id: string): void {
+    this.chatList.unshift({
+      id,
+      unread_messages_count: 0,
     });
   }
 
@@ -78,6 +92,12 @@ export class ChatSidebarComponent implements OnInit {
       this.chatList.unshift(newChatListItem);
     } else {
       this.chatList[chatId].last_message = message;
+      if (
+        message.sender_id != this.getMyId() &&
+        this.chatId !== message.sender_id
+      ) {
+        this.chatList[chatId].unread_messages_count++;
+      }
     }
   }
 
