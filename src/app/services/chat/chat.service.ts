@@ -20,7 +20,7 @@ export class ChatService {
     });
   }
 
-  createMessage(
+  sendMessage(
     data: CreateMessage,
     file: File | null = null,
   ): Observable<Message> {

@@ -22,10 +22,10 @@
       @for (message of messages; track $index) {
         <app-chat-message
           [class]="
-            (message.sender_id == '1'
+            (message.receiver_id == getMyId()
               ? 'bg-teal-700 self-start items-start'
               : 'bg-zinc-700 self-end items-end') +
-            ' min-w-60 p-2 rounded-lg flex flex-col gap-2'
+            ' min-w-60 max-w-[50%] p-2 rounded-lg flex flex-col gap-2'
           "
           [message]="message"
         ></app-chat-message>
@@ -39,7 +39,10 @@
       </div>
     }
   </main>
-  <div class="flex flex-row self-center items-end w-full gap-2 container mb-4">
+  <form
+    [formGroup]="messageForm"
+    class="flex flex-row self-center items-end w-full gap-2 container mb-4"
+  >
     @if (imageSelected) {
       <div
         class="flex-1 bg-zinc-700 flex flex-col justify-center items-start gap-2 p-4 relative rounded-lg"
@@ -61,7 +64,12 @@
         </p>
       </div>
     } @else {
-      <textarea class="flex-1 h-16" hlmInput placeholder="Mensagem"></textarea>
+      <textarea
+        formControlName="message"
+        class="flex-1 h-16"
+        hlmInput
+        placeholder="Mensagem"
+      ></textarea>
     }
 
     <button hlmBtn size="icon" variant="secondary" (click)="fileInput.click()">
@@ -75,10 +83,10 @@
       <hlm-icon class="flex-1" name="lucideImageUp" size="sm" />
     </button>
 
-    <button hlmBtn size="icon">
+    <button (click)="onSendMessage()" hlmBtn size="icon">
       <hlm-icon class="flex-1" name="lucideSendHorizontal" size="sm" />
     </button>
-  </div>
+  </form>
 } @else {
   <div class="flex flex-col justify-center items-center w-full h-full gap-4">
     <hlm-icon name="lucideMessageCircle" size="lg" />

@@ -9,7 +9,11 @@ import {
 import { SharedModule } from '../../shared/shared.component';
 import { NewChatComponent } from '../new-chat/new-chat.component';
 import { UsersService } from '../../services/users/users.service';
-import { ChatList } from '../../services/chat/chat.interface';
+import {
+  ChatList,
+  ChatListItem,
+  Message,
+} from '../../services/chat/chat.interface';
 import { ChatService } from '../../services/chat/chat.service';
 
 @Component({
@@ -29,7 +33,7 @@ export class ChatSidebarComponent implements OnInit {
 
   loading = true;
 
-  chatList: ChatList | null = null;
+  chatList: ChatList = [];
 
   ngOnInit(): void {
     this.getChatList();
@@ -50,6 +54,31 @@ export class ChatSidebarComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  updateChatList(message: Message): void {
+    const chatId = this.chatList.findIndex(
+      (chat) =>
+        chat.id ===
+        (message.sender_id == this.getMyId()
+          ? message.receiver_id
+          : message.sender_id),
+    );
+
+    if (chatId == null || chatId === -1) {
+      const newChatListItem: ChatListItem = {
+        id:
+          message.sender_id == this.getMyId()
+            ? message.receiver_id
+            : message.sender_id,
+        unread_messages_count: 1,
+        last_message: message,
+      };
+
+      this.chatList.unshift(newChatListItem);
+    } else {
+      this.chatList[chatId].last_message = message;
+    }
   }
 
   logout(): void {
