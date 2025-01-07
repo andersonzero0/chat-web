@@ -2,6 +2,11 @@
   <div
     class="bg-zinc-600 flex flex-row justify-start items-center gap-4 py-2 px-4"
   >
+    @if (!openSidebar) {
+      <button hlmBtn size="icon" variant="ghost" (click)="onOpenSidebar.emit()">
+        <hlm-icon class="flex-1" name="lucideMenu" size="sm" />
+      </button>
+    }
     <hlm-avatar variant="medium">
       <span class="text-white bg-zinc-500" hlmAvatarFallback>
         <hlm-icon size="sm" name="lucideUser" />
@@ -23,11 +28,12 @@
         <app-chat-message
           [class]="
             (message.receiver_id == getMyId()
-              ? 'bg-teal-700 self-start items-start'
+              ? 'bg-teal-800 self-start items-start'
               : 'bg-zinc-700 self-end items-end') +
             ' min-w-60 max-w-[50%] p-2 rounded-lg flex flex-col gap-2'
           "
           [message]="message"
+          [isMy]="message.sender_id == getMyId()"
         ></app-chat-message>
       }
     } @else {

@@ -21,6 +21,7 @@ export class ChatComponent implements OnInit {
   ) {}
 
   openChatId: string | null = null;
+  openSidebar = true;
 
   ngOnInit(): void {
     this.webSocket.socket.on('private-message', (data: Message) => {
@@ -34,6 +35,10 @@ export class ChatComponent implements OnInit {
       }
       this.chatSidebar.updateChatList(data);
     });
+  }
+
+  toggleSidebar(): void {
+    this.openSidebar = !this.openSidebar;
   }
 
   onChatSelected(chatId: string): void {

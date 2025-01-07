@@ -2,10 +2,14 @@
   <app-chat-sidebar
     [chatId]="openChatId"
     (chatSelected)="onChatSelected($event)"
+    (onOpenSidebar)="toggleSidebar()"
+    [openSidebar]="openSidebar"
   ></app-chat-sidebar>
 
   <app-chat-content
     [chatId]="openChatId"
+    (onOpenSidebar)="toggleSidebar()"
+    [openSidebar]="openSidebar"
     class="flex flex-col w-full gap-4"
   ></app-chat-content>
 </main>

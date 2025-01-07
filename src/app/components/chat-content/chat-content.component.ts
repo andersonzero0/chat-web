@@ -33,6 +33,8 @@ import {
 })
 export class ChatContentComponent implements AfterViewInit {
   @ViewChild('messagesContainer') messagesContainer!: ElementRef;
+  @Output() onOpenSidebar = new EventEmitter<void>();
+  @Input() openSidebar!: boolean;
 
   constructor(
     private chatService: ChatService,

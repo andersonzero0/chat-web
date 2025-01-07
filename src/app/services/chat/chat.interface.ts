@@ -34,7 +34,7 @@ export interface ChatListItem {
   unread_messages_count: number;
   last_message?: Pick<
     Message,
-    'id' | 'message' | 'created_at' | 'sender_id' | 'receiver_id'
+    'id' | 'message' | 'created_at' | 'sender_id' | 'receiver_id' | 'read'
   >;
 }
 

@@ -15,10 +15,12 @@ import { HlmInputDirective } from '@spartan-ng/ui-input-helm';
 import { HlmIconComponent } from '@spartan-ng/ui-icon-helm';
 import { provideIcons } from '@ng-icons/core';
 import {
+  lucideCheckCheck,
   lucideCopy,
   lucideImage,
   lucideImageUp,
   lucideLogOut,
+  lucideMenu,
   lucideMessageCircle,
   lucideMessageCirclePlus,
   lucideSearch,
@@ -82,6 +84,8 @@ const components = [
       lucideMessageCirclePlus,
       lucideMessageCircle,
       lucideImage,
+      lucideCheckCheck,
+      lucideMenu,
     }),
   ],
 })

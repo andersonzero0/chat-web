@@ -1,7 +1,18 @@
-<nav class="w-64 h-screen bg-zinc-800 p-4 flex flex-col gap-4 overflow-auto">
+<nav
+  [class]="
+    'w-64 h-screen bg-zinc-800 p-4 flex flex-col gap-4 overflow-auto max-md:fixed z-10' +
+    (!openSidebar ? ' hidden' : ' block')
+  "
+>
   <header
     class="border-b-2 border-zinc-600 pb-4 flex flex-row justify-between items-center"
   >
+    @if (chatId) {
+      <button hlmBtn size="icon" variant="ghost" (click)="onOpenSidebar.emit()">
+        <hlm-icon class="flex-1" name="lucideMenu" size="sm" />
+      </button>
+    }
+
     <div class="flex flex-row justify-start items-center gap-4">
       <hlm-avatar>
         <span class="text-white bg-zinc-500" hlmAvatarFallback>
@@ -16,7 +27,7 @@
     </button>
   </header>
 
-  <section>
+  <!-- <section>
     <div
       class="flex flex-row justify-between items-center rounded-md bg-zinc-700 px-2"
     >
@@ -26,7 +37,7 @@
       />
       <hlm-icon class="flex-1" name="lucideUserSearch" size="sm" />
     </div>
-  </section>
+  </section> -->
 
   <section class="flex flex-col gap-4">
     <p class="font-semibold">Conversas</p>
@@ -63,8 +74,20 @@
                 </p>
                 @if (chatListItem.last_message) {
                   @if (chatListItem.last_message.message.type == "text") {
-                    <p class="text-xs text-nowrap">
+                    <p
+                      class="text-xs text-nowrap flex flex-row justify-center gap-1"
+                    >
                       {{ chatListItem.last_message.message.content }}
+
+                      @if (chatListItem.last_message.sender_id == getMyId()) {
+                        <hlm-icon
+                          name="lucideCheckCheck"
+                          size="sm"
+                          [color]="
+                            chatListItem.last_message.read ? '#3DF2F2' : ''
+                          "
+                        />
+                      }
                     </p>
                   } @else {
                     <p
@@ -78,19 +101,23 @@
               </div>
             </div>
 
-            @if (chatListItem.unread_messages_count > 0) {
-              <div>
-                <span
-                  class="bg-red-500 text-white rounded-full px-2 py-1 text-xs"
-                >
-                  {{
-                    chatListItem.unread_messages_count < 100
-                      ? chatListItem.unread_messages_count
-                      : "99+"
-                  }}
-                </span>
+            <div class="flex flex-col items-end gap-1">
+              <p class="text-xs">
+                {{ formattedDate(chatListItem.last_message?.created_at || "") }}
+              </p>
+              <div
+                [class]="
+                  'bg-red-500 text-white rounded-full w-5 h-5 p-1 aspect-square text-xs flex justify-center items-center' +
+                  (chatListItem.unread_messages_count === 0 ? ' opacity-0' : '')
+                "
+              >
+                {{
+                  chatListItem.unread_messages_count < 100
+                    ? chatListItem.unread_messages_count
+                    : "99+"
+                }}
               </div>
-            }
+            </div>
           </div>
         }
       }

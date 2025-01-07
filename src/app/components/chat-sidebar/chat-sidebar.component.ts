@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SharedModule } from '../../shared/shared.component';
 import { NewChatComponent } from '../new-chat/new-chat.component';
 import { UsersService } from '../../services/users/users.service';
@@ -15,6 +8,7 @@ import {
   Message,
 } from '../../services/chat/chat.interface';
 import { ChatService } from '../../services/chat/chat.service';
+import { formattedDate } from '../../../utils/date';
 
 @Component({
   selector: 'app-chat-sidebar',
@@ -25,11 +19,15 @@ import { ChatService } from '../../services/chat/chat.service';
 export class ChatSidebarComponent implements OnInit {
   @Input() chatId: string | null = null;
   @Output() chatSelected = new EventEmitter<string>();
+  @Output() onOpenSidebar = new EventEmitter<void>();
+  @Input() openSidebar!: boolean;
 
   constructor(
     private usersService: UsersService,
     private chatService: ChatService,
   ) {}
+
+  formattedDate = formattedDate;
 
   loading = true;
 
@@ -47,6 +45,7 @@ export class ChatSidebarComponent implements OnInit {
         }
       });
     }
+    this.onOpenSidebar.emit();
     this.chatSelected.emit(chatId);
   }
 
@@ -64,6 +63,14 @@ export class ChatSidebarComponent implements OnInit {
   }
 
   createNewChat(id: string): void {
+    if (this.chatList.find((chat) => chat.id === id)) {
+      return;
+    }
+
+    if (id === this.getMyId()) {
+      return;
+    }
+
     this.chatList.unshift({
       id,
       unread_messages_count: 0,
@@ -99,6 +106,16 @@ export class ChatSidebarComponent implements OnInit {
         this.chatList[chatId].unread_messages_count++;
       }
     }
+
+    this.chatList.sort((a, b) => {
+      if (!a.last_message || !b.last_message) {
+        return 0;
+      }
+
+      const aDate = new Date(a.last_message.created_at);
+      const bDate = new Date(b.last_message.created_at);
+      return bDate.getTime() - aDate.getTime();
+    });
   }
 
   logout(): void {
